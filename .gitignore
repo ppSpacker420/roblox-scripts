@@ -1,0 +1,13 @@
+# Never commit executables — this folder contains untrusted third-party binaries
+*.exe
+*.dll
+*.bat
+*.cmd
+*.ps1
+*.vbs
+*.scr
+*.jar
+*.msi
+*.zip
+*.rar
+*.7z

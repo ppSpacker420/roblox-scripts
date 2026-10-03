@@ -1,0 +1,1 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/arcadeisreal/717exe_Violence_District/refs/heads/main/loader.lua"))()
