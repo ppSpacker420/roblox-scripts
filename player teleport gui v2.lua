@@ -233,7 +233,7 @@ scroller = new("ScrollingFrame", {
 	ScrollBarThickness = 4,
 	ScrollBarImageColor3 = COLORS.Text,
 	AutomaticCanvasSize = Enum.AutomaticSize.Y,
-	Parent = gui.Frame,
+	Parent = gui,
 })
 
 new("UIListLayout", {
