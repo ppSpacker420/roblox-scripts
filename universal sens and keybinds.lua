@@ -86,7 +86,11 @@ local function loadSettings()
 	if type(data.binds) == "table" then
 		for _, name in ipairs(ACTIONS) do
 			local key = data.binds[name]
-			if type(key) == "string" and Enum.KeyCode[key] then
+			-- indexing an invalid Enum member THROWS in Roblox, not returns nil,
+			-- so a corrupt saved bind would take the whole script down
+			if type(key) == "string" and pcall(function()
+				return Enum.KeyCode[key]
+			end) then
 				binds[name] = key
 			end
 		end
@@ -113,6 +117,8 @@ local function applySensitivity()
 	UIS.MouseDeltaSensitivity = state.enabled and 0 or 0.3
 end
 
+local baseRotation = nil
+
 local function currentCamera()
 	return workspace.CurrentCamera
 end
@@ -120,14 +126,17 @@ end
 local function seedOrientation()
 	local cam = currentCamera()
 	if not cam then return end
+	-- capture the camera's current rotation as the base; every frame we rebuild
+	-- the orientation from this base instead of stacking onto the last frame
+	baseRotation = cam.CFrame - cam.CFrame.Position
 	state.yaw, state.pitch = 0, 0
-	cam.CFrame = cam.CFrame * CFrame.Angles(0, 0, 0)
 end
 
 local function onRenderStep()
 	if not state.enabled then return end
 	local cam = currentCamera()
 	if not cam then return end
+	if not baseRotation then seedOrientation() end
 	local delta = UIS:GetMouseDelta()
 	if not delta or (delta.X == 0 and delta.Y == 0) then return end
 
@@ -138,7 +147,11 @@ local function onRenderStep()
 	state.pitch = clamp(state.pitch - delta.Y * scale, -1.55, 1.55)
 	state.yaw = state.yaw - delta.X * scale
 
-	cam.CFrame = cam.CFrame * CFrame.Angles(state.pitch, state.yaw, 0)
+	-- position tracks the player; orientation is rebuilt from the base every
+	-- frame so rotation can never compound
+	cam.CFrame = CFrame.new(cam.CFrame.Position)
+		* baseRotation
+		* CFrame.Angles(state.pitch, state.yaw, 0)
 end
 
 RunService:BindToRenderStep("UniversalSens", 201, onRenderStep)
