@@ -10,3 +10,6 @@
 *.zip
 *.rar
 *.7z
+
+# Wave build output
+.wave/

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Entry": "Esp Betterv4.lua",
+  "Output": "main.luau",
+  "Config": "",
+  "Bundle": true,
+  "Dense": false,
+  "RemoveComments": false,
+  "RemoveTypes": false,
+  "RenameVariables": false
+}
